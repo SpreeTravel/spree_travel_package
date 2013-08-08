@@ -1,8 +1,17 @@
-source 'http://localhost/rubygems/'
+MODE = 'git'  #REMOTE MODE
+#MODE = 'path' #LOCAL MODE
 
-# Provides basic authentication functionality for testing parts of your engine
-#gem 'spree_auth_devise', github: 'spree/spree_auth_devise'
+# REMOTE CONFIGURATION (DEFAULT)
+GEMS_PATH = 'http://rubygems.org'
+SPREE_TRAVEL_PATH = 'https://github.com/openjaf'
 
-gem 'spree_travel', :path => '../spree_travel/'
+## lOCAL PQR CONFIGURATION
+#GEMS_PATH = 'http://localhost/rubygems/'
+#SPREE_TRAVEL_PATH = '..'
+########################################################################
+
+source GEMS_PATH
+
+gem 'spree_travel', :"#{MODE}" => "#{SPREE_TRAVEL_PATH}/spree_travel"
 
 gemspec
