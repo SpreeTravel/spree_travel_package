@@ -18,6 +18,6 @@ end
 
 source GEMS_PATH
 
-gem 'spree_travel', :git => "#{SPREE_TRAVEL_PATH}/spree_travel"
+gem 'spree_travel_core', :git => "#{SPREE_TRAVEL_PATH}/spree_travel_core"
 
 gemspec
