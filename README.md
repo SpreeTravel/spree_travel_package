@@ -1,8 +1,8 @@
-Spree::Travel::Program
+Spree::Travel::Package
 ----------------------
-* Programa/Paquete
+* Paquete
 * relaciones + metodos_similares
-  - i_am_part_of_program (esta relacion define como tipo en relatable = Spree::Product)
+  - i_am_part_of_package (esta relacion define como tipo en relatable = Spree::Product)
     --> es que cualquier tipo de producto puede ser parte de un programa
 * metodos
   - program_parts
