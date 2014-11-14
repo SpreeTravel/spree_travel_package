@@ -26,10 +26,7 @@ module Spree
     def self.get_rate_price(rate, adults, children)
       adults = adults.to_i
       children = children.to_i
-      adults_hash = {1 => 'simple', 2 => 'double', 3 =>'triple'}
-      price = adults * rate.send(adults_hash[adults]).to_f
-      price += rate.first_child.to_f if children >= 1
-      price += rate.second_child.to_f if children == 2
+      price = adults * rate.one_adult + children * rate.one_child
       price
     end
 
@@ -47,7 +44,6 @@ module Spree
         next if variant && (variant.id != r.variant_id)
         next if context.start_date && (context.start_date.to_date < r.start_date.to_date rescue false)
         next if context.end_date && (context.end_date.to_date > r.end_date.to_date rescue false)
-        next if context.plan && context.plan.to_i != r.plan.to_i
         adults_array = self.get_adult_list(r, context.adult)
         children_array = self.get_child_list(r, context.child)
         combinations = adults_array.product(children_array)
