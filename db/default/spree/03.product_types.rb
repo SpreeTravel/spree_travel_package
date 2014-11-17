@@ -1,5 +1,5 @@
 ### This is the data
-rates = ['start_date', 'end_date', 'plan', 'simple', 'double', 'triple', 'one_child', 'one_adult']
+rates = ['start_date', 'end_date', 'one_child', 'one_adult']
 contexts = ['start_date', 'end_date', 'adult', 'child']
 variants = []
 
