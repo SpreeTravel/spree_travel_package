@@ -1,12 +1,12 @@
 module Spree
   class CalculatorPackage < BaseCalculator
 
-    def max_adults
-      1
+    def adults_range
+      0..1
     end
 
-    def max_children
-      1
+    def children_range
+      0..1
     end
 
     def calculate_price(context, product)
@@ -27,8 +27,12 @@ module Spree
       prices
     end
 
-    def combination_string(rate)
+    def combination_string_for_generation(rate)
       ""
+    end
+
+    def combination_string_for_search(context)
+      "%"
     end
 
     def get_rate_price(rate, adults, children)
@@ -44,7 +48,7 @@ module Spree
       if pt_adults.present?
         [pt_adults]
       else
-        (1..max_adults).to_a
+        adults_range
       end
     end
 
@@ -52,7 +56,7 @@ module Spree
       if pt_child.present?
         [pt_child]
       else
-        (0..max_children).to_a
+        children_range
       end
     end
 
