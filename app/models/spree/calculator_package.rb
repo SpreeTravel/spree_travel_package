@@ -2,11 +2,11 @@ module Spree
   class CalculatorPackage < BaseCalculator
 
     def adults_range
-      0..1
+      (0..1).to_a
     end
 
     def children_range
-      0..1
+      (0..1).to_a
     end
 
     def calculate_price(context, product)
