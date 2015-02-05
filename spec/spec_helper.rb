@@ -28,8 +28,9 @@ require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/url_helpers'
 
-# Requires factories defined in lib/spree_travel_package/factories.rb
+# Requires factories defined in lib/spree_travel_flight/factories.rb
 require 'spree_travel_package/factories'
+require 'spree_travel_core/factories'
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
@@ -68,14 +69,26 @@ RSpec.configure do |config|
 
   # Before each spec check if it is a Javascript test and switch between using database transactions or not where necessary.
   config.before :each do
-    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
-    DatabaseCleaner.start
+    # DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
+    # DatabaseCleaner.start
   end
 
   # After each spec clean the database.
   config.after :each do
     DatabaseCleaner.clean
   end
+  original_stderr = $stderr
+  original_stdout = $stdout
+  config.before(:all) do
+    # Redirect stderr and stdout
+    $stderr = File.new(File.join(File.dirname(__FILE__), 'dev', 'null.txt'), 'w')
+    $stdout = File.new(File.join(File.dirname(__FILE__), 'dev', 'null.txt'), 'w')
+  end
+  config.after(:all) do
+    $stderr = original_stderr
+    $stdout = original_stdout
+  end
+
 
   config.fail_fast = ENV['FAIL_FAST'] || false
 end
