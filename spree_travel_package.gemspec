@@ -12,8 +12,8 @@ Gem::Specification.new do |s|
   s.description = 'Add programs logic into spree'
   s.required_ruby_version = '>= 1.9.3'
 
-  s.authors   = ['Pedro Quintero', 'Miguel Sancho', 'Cesar Lage', 'Raul Perez-alejo', 'Alejandro Dustet']
-  s.email     = 'pqr@openjaf.com'
+  s.authors   = ['Pedro Quintero Rojas', 'Miguel Sancho Feranandez', 'Cesar Lage Codorníu', 'Raul Perez-Alejo Neyra']
+  s.email     = 'info@openjaf.com'
   s.homepage  = 'http://github.com/openjaf/spree_travel_package'
 
   #s.files       = `git ls-files`.split("\n")
@@ -22,7 +22,9 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   s.add_dependency 'spree_core', '~> ' + versions['spree']
-
+  s.add_dependency 'spree_travel_core', '~> ' + versions['spree']
+  
+  
   s.add_development_dependency 'capybara', '~> 2.4'
   s.add_development_dependency 'coffee-rails'
   s.add_development_dependency 'database_cleaner'
