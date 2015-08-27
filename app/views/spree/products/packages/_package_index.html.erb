@@ -1,0 +1,40 @@
+<%
+   kls = "col-md-12 product-item"
+   new_params = params.clone
+   new_params.merge!({:controller => "spree/products", :action => "show" , :id => product.slug})
+   otro_params = new_params.clone
+%>
+<!-- TODO 13/10/2014 Check if the data-hook2 attribute holds the right value -->
+<li id="product_<%= product.id %>" class="<%= kls %>" data-hook2="product_<%=product.product_type%>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+  <div class="col-md-2">
+    <%= link_to small_image(product, :itemprop => "image"),  new_params, :itemprop => 'url' %>
+  </div>
+  <div class="col-md-10">
+    <div class="product-title">
+      <%= link_to(new_params, :class => 'info', :itemprop => "name", :title => product.name) do %>
+          <%= product.name %>
+      <%end%>
+    </div>
+    <div class="product-destination">
+      <%= link_to product.destination, product.destination_taxon %>
+    </div>
+    <div class="product-mini-description">
+      <%= truncate(product.description, :length => 300)%>
+    </div>
+
+        <div class="details col-xs-12 col-sm-8 col-md-9">
+          <% rates = display_the_price(product.variants.first)%>
+          <% rates.each do |r|%>
+              <div class="price-section">
+                <span class="price"><small>Price:</small> <%=get_package_price(r, params[:package_adult], params[:package_child])%></span>
+              </div>
+              <div class="action-section">
+                <%= render :partial => 'spree/products/cart_form', :locals => { product: product, variant_id: product.variants.first.id, rate_id: r.id, mini: true} %>
+              </div>
+          <%end%>
+        </div>
+  </div>
+</li>
+
+
+

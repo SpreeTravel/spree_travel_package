@@ -9,22 +9,43 @@ module Spree
       (0..1).to_a
     end
 
-    def calculate_price(context, product)
-      return [product.price.to_f] if product.rates.empty?
-      prices = []
-      days = context.end_date.to_date - context.start_date.to_date rescue 1
+    def calculate_price(context, variant, options)
+      return [variant.price.to_f] if variant.rates.empty?
 
-      product.rates.each do |r|
-        next if context.start_date.present? && (context.start_date.to_date < r.start_date.to_date rescue false)
-        next if context.end_date.present? && (context.end_date.to_date > r.end_date.to_date rescue false)
-        adults_array = get_adult_list(r, context.adult)
-        children_array = get_child_list(r, context.child)
-        combinations = adults_array.product(children_array)
-        combinations.each do |ad, ch|
-          prices << get_rate_price(r, ad, ch) * days
+      list = variant.rates
+      rates = []
+      list.each do |r|
+        if r.start_date <= context.start_date(options).to_s && r.end_date >= context.end_date(options).to_s
+          rates << r
         end
       end
-      prices
+
+      rates
+
+
+
+      # prices = []
+      # days = context.end_date(options).to_date - context.start_date(options).to_date rescue 1
+      #
+      # list = product.combinations
+      # list = list.where('start_date <= ?', context.start_date(options)) if context.start_date(options).present?
+      # list = list.where('end_date >= ?', context.end_date(options)) if context.end_date(options).present?
+      # list = list.where('adults > ?', 0)
+      # list = list.order('price ASC')
+      # Log.debug(list.explain)
+      # list
+
+      # product.rates.each do |r|
+      #   next if context.start_date(options).present? && (context.start_date.to_date < r.start_date.to_date rescue false)
+      #   next if context.end_date(options).present? && (context.end_date.to_date > r.end_date.to_date rescue false)
+      #   adults_array = get_adult_list(r, context.adult)
+      #   children_array = get_child_list(r, context.child)
+      #   combinations = adults_array.product(children_array)
+      #   combinations.each do |ad, ch|
+      #     prices << get_rate_price(r, ad, ch) * days
+      #   end
+      # end
+      # prices
     end
 
     def combination_string_for_generation(rate)
