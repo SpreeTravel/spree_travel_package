@@ -21,18 +21,15 @@
     <div class="product-mini-description">
       <%= truncate(product.description, :length => 300)%>
     </div>
-
-        <div class="details col-xs-12 col-sm-8 col-md-9">
-          <% rates = display_the_price(product.variants.first)%>
-          <% rates.each do |r|%>
-              <div class="price-section">
-                <span class="price"><small>Price:</small> <%=get_package_price(r, params[:package_adult], params[:package_child])%></span>
-              </div>
-              <div class="action-section">
-                <%= render :partial => 'spree/products/cart_form', :locals => { product: product, variant_id: product.variants.first.id, rate_id: r.id, mini: true} %>
-              </div>
-          <%end%>
-        </div>
+    <%hash = display_the_price(product.variants.first).first%>
+    <div class="details col-xs-12 col-sm-8 col-md-9">
+      <div class="price-section">
+        <span class="price"><small>Price:</small><%= hash[:price]%> </span>
+      </div>
+      <div class="action-section">
+        <%= render :partial => 'spree/products/cart_form', :locals => { product: product, variant_id: product.variants.first.id, rate_id: hash[:rate], mini: true} %>
+      </div>
+    </div>
   </div>
 </li>
 
